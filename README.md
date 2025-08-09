@@ -1,8 +1,8 @@
-# ticketly-backend
+# Show Project 
 
 ---
 
-## 🎫 Ticket Management System (MERN Stack)
+## 🎫 Show Management System (MVT Stack)
 
 A full-stack web application built (MVT) with the Django 5 using Pyhon 3 (PostgreSQL Node.js) that allows users to review the Series / Movies , add comments & Rating .
 
