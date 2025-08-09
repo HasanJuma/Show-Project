@@ -86,8 +86,10 @@ A full-stack web application built (MVT) with the Django 5 using Pyhon 3 (Postgr
 
 1. 👤 As a user, I want to register and log in so that I can submit comments and add reting for the show.  
 2. 📋 As a user, I want to view all show and details so I can follow up the best show TV and Movies .  
-4. 📧 As a user, I want to update profile to keep up-date .  
-5. 🔁 As a user, I want to see all replies on each show . 
+3. 📧 As a user, I want to update profile to keep up-date .  
+4. 🔁 As a user, I want to see all replies on each show . 
+5. As a user, I want to update my profile, such as username, profile picture, or contact information.
+
 
 ---
 
