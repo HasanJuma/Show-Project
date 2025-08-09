@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie & Series Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header class="site-header">
+  <nav>
+    <ul class="navbar-list">
+      <li><a href="{% url 'home' %}">Home</a></li>
+      <li><a href="{% url 'show_list' %}">Browse Shows</a></li>
+
+      {% if user.is_authenticated %}
+        <li class="welcome-text">Welcome {{ user.username }}</li>
+        <li><a href="{% url 'logout_view' %}">Logout</a></li>
+      {% else %}
+        <li><a href="{% url 'login' %}">Login</a></li>          {# ← 'login' مو 'login_view' #}
+        <li><a href="{% url 'register' %}">Register</a></li>    {# ← 'register' مو 'register_view' #}
+      {% endif %}
+    </ul>
+  </nav>
+</header>
+</body>
+</html>
+
+

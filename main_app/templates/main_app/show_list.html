@@ -1,0 +1,23 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}All Shows{% endblock %}
+
+{% block content %}
+<h2>All Shows</h2>
+
+<div class="card-grid">
+    {% for show in shows %}
+    <div class="card">
+        {% if show.image and show.image.url %}
+        <img src="{{ show.image.url }}" alt="{{ show.title }}">
+        {% else %}
+        <img src="{{ MEDIA_URL }}shows/default.jpg" alt="{{ show.title }}">
+        {% endif %}
+        <h3>{{ show.title }}</h3>
+        <p><span class="category-label">{{ show.category }}</span></p>
+        <p>{{ show.release_date }}</p>
+        <a href="{% url 'show_detail' show.id %}">View Details</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

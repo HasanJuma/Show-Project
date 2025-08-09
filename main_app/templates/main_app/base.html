@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {% load static %}
+    <title>{% block title %}My Show Project{% endblock %}</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="site-body">
+    {% include 'main_app/header.html' %}
+
+    <!-- Messages -->
+    <div class="messages">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <!-- Page Content -->
+    <main class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include 'main_app/footer.html' %}
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}Show Details{% endblock %}
+
+{% block content %}
+<div class="show-detail-card">
+    {% if show.image and show.image.url %}
+        <img src="{{ show.image.url }}" alt="{{ show.title }}">
+    {% else %}
+        <img src="/media/shows/default.jpg" alt="{{ show.title }}">
+    {% endif %}
+
+    <div class="show-info">
+        <h2>{{ show.title }}</h2>
+
+        <p><span class="category-label">{{ show.category }}</span></p>
+        <p><strong>Description:</strong><br> {{ show.description }}</p>
+        <p><strong>Release Date:</strong> {{ show.release_date }}</p>
+        <p><strong>Season:</strong> {{ show.season }}</p>
+        <p><strong>Type:</strong> {{ show.type }}</p>
+
+        <p><strong>Rating:</strong>
+            <span class="rating-stars">
+                {% for i in "12345" %}
+                    {% if forloop.counter <= show.average_rating %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                {% endfor %}
+                ({{ show.average_rating }}/5)
+            </span>
+        </p>
+
+        <a href="{% url 'show_list' %}" class="back-button">← Back to List</a>
+    </div>
+</div>
+
+<hr>
+
+<!-- Rating Form -->
+<h3>Add Your Rating</h3>
+{% if user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    {{ rating_form.as_p }}
+    <button type="submit" name="submit_rating">Submit Rating</button>
+</form>
+{% else %}
+<p style="color:#FFC107;">You must <a href="{% url 'login' %}">log in</a> to rate.</p>
+{% endif %}
+
+<!-- Comment Form -->
+<h3>Leave a Comment</h3>
+{% if user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit" name="submit_comment">Submit Comment</button>
+</form>
+{% else %}
+<p style="color:#FFC107;">You must <a href="{% url 'login' %}">log in</a> to comment.</p>
+{% endif %}
+
+<!-- Comments List -->
+<h3>All Comments</h3>
+<div class="comments-section">
+    {% if comments %}
+        {% for c in comments %}
+            <div class="comment-item">
+                <p><strong>{{ c.user_name }}</strong> — <small>{{ c.created_at }}</small></p>
+                <p>{{ c.content }}</p>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
