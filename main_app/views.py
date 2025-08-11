@@ -1,12 +1,15 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Show
-from .forms import RatingForm, CommentForm
+from .models import Show , Profile
+from .forms import RatingForm, CommentForm , ProfileForm
 from django.contrib import messages
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout , update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from .forms import RegisterForm
 
+# import 
+
+from django.contrib.auth.forms import PasswordChangeForm
 
 # create your views here 
 
@@ -17,26 +20,22 @@ def show_list(request):
     shows = Show.objects.all()
     return render(request, 'main_app/show_list.html', {'shows': shows})
 
-from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib import messages
-from .models import Show
-from .forms import RatingForm, CommentForm
 
 def show_detail(request, show_id):
     show = get_object_or_404(Show, id=show_id)
 
-    # احضري كل التقييمات والتعليقات
+    # to get all comments & ratings
     ratings = show.ratings.all()
-    comments = show.comments.order_by('-created_at')  # الأحدث أولاً
+    comments = show.comments.order_by('-created_at')  # New first
 
     rating_form = RatingForm()
     comment_form = CommentForm()
 
     if request.method == 'POST':
-        # إرسال تقييم
+        # to send rating 
         if 'submit_rating' in request.POST:
             if request.user.is_authenticated:
-                # منع التقييم المكرر
+                # prevent rating again 
                 existing = show.ratings.filter(user_name=request.user.username).first()
                 if existing:
                     messages.warning(request, "You have already rated this show.")
@@ -56,7 +55,7 @@ def show_detail(request, show_id):
                 messages.warning(request, "You must be logged in to submit a rating.")
                 return redirect('login')
 
-        # إرسال تعليق
+        # Submit a cooment 
         elif 'submit_comment' in request.POST:
             if request.user.is_authenticated:
                 comment_form = CommentForm(request.POST)
@@ -91,10 +90,10 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')   # أو أي صفحة تبينها بعد الدخول
+            return redirect('home')   
         else:
             messages.error(request, "Invalid username or password.")
-            return redirect('login')  # ← هنا كانت المشكلة: لا تكتبي 'login_view'
+            return redirect('login')  
     return render(request, 'main_app/login.html')
 
 def register_view(request):
@@ -103,7 +102,7 @@ def register_view(request):
         if form.is_valid():
             form.save()
             messages.success(request, "Registration successful. Please log in.")
-            return redirect('login')  # ← بدل login_view
+            return redirect('login')  
     else:
         form = RegisterForm()
     return render(request, 'main_app/register.html', {'form': form})
@@ -112,4 +111,46 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
     return redirect('home')
+
+# update profile & change password
+
+
+
+@login_required
+def profile_edit(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        # English comment: Pass the user to the form so it can handle first/last name updates
+        form = ProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Profile updated successfully.")
+            return redirect('home')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = ProfileForm(instance=profile, user=request.user)  # 👈 now this works because form accepts 'user'
+
+    return render(request, 'main_app/profile_edit.html', {'form': form})
+
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()  # to save new passwrod
+            update_session_auth_hash(request, user)  # stay login information
+            messages.success(request, "Your password has been updated.")
+            return redirect('home')  # أو redirect('change_password')
+        else:
+            messages.error(request, "Please fix the errors below.")
+    else:
+        form = PasswordChangeForm(request.user)
+
+    return render(request, 'main_app/change_password.html', {'form': form})
+
+
 

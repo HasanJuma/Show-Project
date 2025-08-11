@@ -6,6 +6,15 @@ body {
     padding: 0;
 }
 
+/* ===== All Shows Page Title ===== */
+.all-shows-title {
+    text-align: center;   
+    color: #00BFFF;       
+    margin: 20px 0;      
+    font-size: 28px;      
+    letter-spacing: 1px;  
+}
+
 header {
     background-color: #232323;
     padding: 15px 0;
@@ -216,4 +225,19 @@ form button {
 form button:hover {
     background-color: #E53935;
 }
+
+
+
+
+.messages { padding: 10px 20px; }
+.message { margin: 8px 0; padding: 10px 12px; border-radius: 6px; }
+
+.message.success { background-color: #1B5E20; color: #E8F5E9; }  /* أخضر */
+.message.error { background-color: #B71C1C; color: #FFEBEE; }    /* أحمر */
+.message.warning { background-color: #9E9D24; color: #FFFDE7; }  /* أصفر */
+
+
+
+
+
 

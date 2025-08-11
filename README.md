@@ -13,24 +13,18 @@ A full-stack web application built (MVT) with the Django 5 using Pyhon 3 (Postgr
 ---
 
 ### 🗺️ ERD
-![ERD](screenshots/ERD.jpg)
+![ERD](media/shows/ERD.png)
 
 ### 🖥️ Home Page
 ![Home Page](screenshots/homepage.png)
 
 ### 🧾 Submit Comment 
-![Submit Ticket](screenshots/submit-ticket.png)
+![Submit Comment](screenshots/submit-ticket.png)
 
-### 
-![My Tickets](screenshots/my-tickets.png)
+### Show Details
+![show Details](screenshots/Ticket-Details.png)
 
-### 
-![Admin Dashboard](screenshots/admin-dashboard.png)
-
-### 
-![Ticket Details](screenshots/Ticket-Details.png)
-
-### 
+### Profile User 
 ![Profile User](screenshots/Profile-User.png)
 
 

@@ -14,13 +14,13 @@
     {% include 'main_app/header.html' %}
 
     <!-- Messages -->
-    <div class="messages">
-        {% if messages %}
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-    </div>
+   <div class="messages">
+  {% if messages %}
+    {% for message in messages %}
+      <div class="message {{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
 
     <!-- Page Content -->
     <main class="container">
