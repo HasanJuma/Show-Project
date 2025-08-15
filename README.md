@@ -76,36 +76,6 @@ A Django-based platform that allows registered users to browse, rate, and commen
 
 ---
 
-## Installation
-`bash
-# Clone repository
-git clone <repo_url>
-
-# Navigate to project
-cd Show-Project
-
-# Create virtual environment
-python -m venv venv
-
-# Activate environment
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Apply migrations
-python manage.py migrate
-
-# Create superuser
-python manage.py createsuperuser
-
-# Run server
-python manage.py runserver
-
-
----
-
 ### 🚀 Future Improvements
 
 - Enhance the Homepage interface .
