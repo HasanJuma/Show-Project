@@ -30,32 +30,50 @@ class CommentForm(forms.ModelForm):
 # update profile 
 
 class ProfileForm(forms.ModelForm):
-    # أضف حقول الاسم من User كحقول عادية في الفورم
-    first_name = forms.CharField(required=False, max_length=150)
-    last_name  = forms.CharField(required=False, max_length=150)
+    # Fields from the User model
+    first_name = forms.CharField(required=False, max_length=150, label="First name")
+    last_name  = forms.CharField(required=False, max_length=150, label="Last name")
+    email      = forms.EmailField(required=True, label="Email")
 
     class Meta:
         model = Profile
-        fields = ['image']  # الصورة من Profile فقط
+        fields = ['image']
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'accept': 'image/*'
+            }),
+        }
 
     def __init__(self, *args, **kwargs):
-        # Extract the 'user' passed from the view and store it
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-        
-        #  If the user exists, pre-fill first_name and last_name fields
         if self.user:
             self.fields['first_name'].initial = self.user.first_name
-            self.fields['last_name'].initial = self.user.last_name
+            self.fields['last_name'].initial  = self.user.last_name
+            self.fields['email'].initial      = self.user.email
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email', '').strip()
+        if not email:
+            raise forms.ValidationError("Email is required.")
+        qs = User.objects.filter(email__iexact=email)
+        if self.user:
+            qs = qs.exclude(pk=self.user.pk)
+        if qs.exists():
+            raise forms.ValidationError("This email is already in use by another account.")
+        return email
 
     def save(self, commit=True):
         profile = super().save(commit=False)
-        # Also update related User model fields
         if self.user:
             self.user.first_name = self.cleaned_data.get('first_name', '')
-            self.user.last_name = self.cleaned_data.get('last_name', '')
+            self.user.last_name  = self.cleaned_data.get('last_name', '')
+            self.user.email      = self.cleaned_data.get('email', '')
             if commit:
                 self.user.save()
+        if not profile.user_id and self.user:
+            profile.user = self.user
         if commit:
             profile.save()
         return profile

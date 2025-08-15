@@ -1,0 +1,93 @@
+.profile-wrapper {
+  min-height: calc(100vh - 140px); /* يراعي الهيدر والفوتر التقريبية */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+  background: #181818; /* ثيمك الأساسي */
+}
+
+/* البطاقة */
+.profile-card {
+  width: 100%;
+  max-width: 560px;
+  background: #232323;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  color: #F5F5F5;
+}
+
+/* عنوان */
+.profile-title {
+  margin: 0 0 16px 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+/* صورة البروفايل داخل دائرة */
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 20px 0;
+}
+
+.profile-avatar img {
+  width: 128px;
+  height: 128px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #37474F;
+  background: #37474F;
+}
+
+
+/* معلومات */
+.profile-info {
+  background: #1f1f1f;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+.profile-info .row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(255,255,255,0.08);
+}
+.profile-info .row:last-child {
+  border-bottom: none;
+}
+.profile-info .label {
+  color: #E0E0E0;
+  font-weight: 600;
+}
+.profile-info .value {
+  color: #FFD700; /* ذهبي */
+}
+
+/* الأزرار */
+.profile-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .15s ease, opacity .15s ease;
+}
+.btn:hover { transform: translateY(-1px); opacity: .95; }
+
+.btn.primary {
+  background: #B71C1C;   /* أحمر سينمائي */
+  color: #fff;
+}
+.btn.outline {
+  border: 2px solid #607D8B; /* أزرق رمادي */
+  color: #F5F5F5;
+}

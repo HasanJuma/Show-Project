@@ -1,0 +1,98 @@
+.profile-edit-wrapper {
+  min-height: calc(100vh - 140px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #181818; /* خلفية داكنة حسب الثيم */
+  padding: 24px;
+}
+
+/* البطاقة */
+.profile-edit-card {
+  width: 100%;
+  max-width: 560px;
+  background: #232323;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  color: #F5F5F5;
+}
+
+.profile-edit-card h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 24px;
+}
+
+/* النموذج */
+.profile-edit-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.profile-edit-form label {
+  color: #E0E0E0;
+  font-weight: 600;
+}
+
+.profile-edit-form input[type="text"],
+.profile-edit-form input[type="email"],
+.profile-edit-form input[type="file"] {
+  background: #1f1f1f;
+  color: #F5F5F5;
+  border: 1px solid #37474F;
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+.profile-edit-form input[type="text"]:focus,
+.profile-edit-form input[type="email"]:focus,
+.profile-edit-form input[type="file"]:focus {
+  border-color: #607D8B; /* أزرق رمادي */
+}
+
+/* رسالة خطأ للحقل */
+.field-error {
+  background: #B71C1C;
+  color: #FFEBEE;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+/* الأزرار */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .15s ease, opacity .15s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn:hover { transform: translateY(-1px); opacity: .95; }
+
+.btn.primary {
+  background: #B71C1C;   /* أحمر سينمائي */
+  color: #fff;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.current-profile-image {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.current-profile-image img {
+  max-width: 120px;
+  max-height: 120px;
+  border-radius: 50%;
+  border: 2px solid #607D8B;
+  object-fit: cover;
+}

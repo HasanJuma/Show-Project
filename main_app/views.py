@@ -112,25 +112,29 @@ def logout_view(request):
     messages.success(request, "You have been logged out.")
     return redirect('home')
 
+
+@login_required
+def profile_view(request):
+    profile, _ = Profile.objects.get_or_create(user=request.user)
+    return render(request, 'main_app/profile.html', {
+        'profile': profile
+    })
+
 # update profile & change password
-
-
-
 @login_required
 def profile_edit(request):
     profile, _ = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        # English comment: Pass the user to the form so it can handle first/last name updates
         form = ProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
         if form.is_valid():
             form.save()
             messages.success(request, "Profile updated successfully.")
-            return redirect('home')
+            return redirect('profile')  # profile display page after update
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = ProfileForm(instance=profile, user=request.user)  # 👈 now this works because form accepts 'user'
+        form = ProfileForm(instance=profile, user=request.user)
 
     return render(request, 'main_app/profile_edit.html', {'form': form})
 
@@ -144,7 +148,7 @@ def change_password(request):
             user = form.save()  # to save new passwrod
             update_session_auth_hash(request, user)  # stay login information
             messages.success(request, "Your password has been updated.")
-            return redirect('home')  # أو redirect('change_password')
+            return redirect('home')  # OR redirect('change_password')
         else:
             messages.error(request, "Please fix the errors below.")
     else:

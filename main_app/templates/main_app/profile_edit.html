@@ -1,6 +1,62 @@
 {% extends 'main_app/base.html' %}
-{% block title %} Profile Page {% endblock %}
+{% load static %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{# CSS خاص بهذه الصفحة #}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/profile_edit.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="profile-edit-wrapper">
+    <div class="profile-edit-card">
+        <h2>Edit Profile</h2>
 
+        <form method="POST" enctype="multipart/form-data" class="profile-edit-form">
+            {% csrf_token %}
 
-{% endblock content %}
+            <div class="form-row">
+                <label>First name</label>
+                {{ form.first_name }}
+                {% if form.first_name.errors %}
+                    <div class="field-error">{{ form.first_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label>Last name</label>
+                {{ form.last_name }}
+                {% if form.last_name.errors %}
+                    <div class="field-error">{{ form.last_name.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label>Email</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="field-error">{{ form.email.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <label>Current Profile Image</label>
+                <div class="current-profile-image">
+                    <img src="{% if form.instance.image %}{{ form.instance.image.url }}{% else %}{% static 'profiles/default.jpg' %}{% endif %}" alt="Profile Image">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>Upload New Profile Image</label>
+                {{ form.image }}
+                {% if form.image.errors %}
+                    <div class="field-error">{{ form.image.errors.0 }}</div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn primary">Update Profile</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

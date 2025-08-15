@@ -16,6 +16,7 @@
 
       {% if user.is_authenticated %}
         <li class="welcome-text">Welcome {{ user.username }}</li>
+        <li><a href="{% url 'profile' %}">My Profile</a></li>         
         <li><a href="{% url 'profile_edit' %}">Edit Profile</a></li>
         <li><a href="{% url 'change_password' %}">Change Password</a></li>
         <li><a href="{% url 'logout_view' %}">Logout</a></li>

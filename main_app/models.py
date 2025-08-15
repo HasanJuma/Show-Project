@@ -23,7 +23,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     image = models.ImageField(upload_to='profiles/', default='profiles/default.jpg', blank=True)
 
-    def __str__(self):  # Fixed: added double underscores for __str__
+    def __str__(self):  
         # This will display the profile in the admin panel as "Profile of username"
         return f"Profile of {self.user.username}"
 
